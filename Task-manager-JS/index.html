@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Task Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Auth Pages -->
+    <div id="auth-container" class="container">
+        <!-- Login Page -->
+        <div id="login-page" class="page active">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h1>Task Manager</h1>
+                    <p>Collaborate efficiently</p>
+                </div>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" placeholder="you@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                    <p class="auth-link">Don't have an account? <a href="#" id="to-signup">Sign up</a></p>
+                </form>
+            </div>
+        </div>
+
+        <!-- Signup Page -->
+        <div id="signup-page" class="page">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h1>Create Account</h1>
+                    <p>Join your team</p>
+                </div>
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" placeholder="you@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" placeholder="••••••••" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-role">Role</label>
+                        <select id="signup-role" required>
+                            <option value="">Select a role</option>
+                            <option value="admin">Admin</option>
+                            <option value="member">Member</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Account</button>
+                    <p class="auth-link">Already have an account? <a href="#" id="to-login">Sign in</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Pages -->
+    <div id="app-container" class="container" style="display: none;">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h2 class="app-title">📋 Task Manager</h2>
+                </div>
+                <div class="header-right">
+                    <span id="user-name" class="user-info"></span>
+                    <button id="logout-btn" class="btn btn-secondary">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Page -->
+        <div id="dashboard-page" class="page active">
+            <div class="dashboard-header">
+                <div>
+                    <h1>Dashboard</h1>
+                    <p>Manage your projects and tasks</p>
+                </div>
+                <button id="create-project-btn" class="btn btn-primary">+ New Project</button>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="projects-grid" id="projects-grid">
+                <!-- Projects will be inserted here -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-projects" class="empty-state" style="display: none;">
+                <div class="empty-icon">📁</div>
+                <h3>No projects yet</h3>
+                <p>Create your first project to get started</p>
+            </div>
+        </div>
+
+        <!-- Project Details Page -->
+        <div id="project-page" class="page">
+            <div class="project-header">
+                <button id="back-to-dashboard" class="btn btn-ghost">← Back</button>
+                <div class="project-title-section">
+                    <h1 id="project-title">Project Name</h1>
+                    <p id="project-description">Project description</p>
+                </div>
+                <div class="project-actions">
+                    <button id="add-task-btn" class="btn btn-primary">+ Add Task</button>
+                    <button id="project-settings-btn" class="btn btn-secondary">⚙️ Settings</button>
+                </div>
+            </div>
+
+            <!-- Team Members -->
+            <div class="team-section">
+                <h3>Team Members</h3>
+                <div class="team-members" id="team-members">
+                    <!-- Team members will be inserted here -->
+                </div>
+                <button id="add-member-btn" class="btn btn-secondary btn-sm">+ Add Member</button>
+            </div>
+
+            <!-- Tasks List -->
+            <div class="tasks-section">
+                <div class="tasks-header">
+                    <h3>Tasks</h3>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="pending">Pending</button>
+                        <button class="filter-btn" data-filter="active">Active</button>
+                        <button class="filter-btn" data-filter="completed">Completed</button>
+                    </div>
+                </div>
+                <div id="tasks-list" class="tasks-list">
+                    <!-- Tasks will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- New Project Modal -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New Project</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="project-form">
+                <div class="form-group">
+                    <label for="project-name">Project Name</label>
+                    <input type="text" id="project-name" placeholder="Enter project name" required>
+                </div>
+                <div class="form-group">
+                    <label for="project-desc">Description</label>
+                    <textarea id="project-desc" placeholder="Enter project description" rows="4"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary modal-cancel">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Project</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- New Task Modal -->
+    <div id="task-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New Task</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="task-form">
+                <div class="form-group">
+                    <label for="task-title">Task Title</label>
+                    <input type="text" id="task-title" placeholder="Enter task title" required>
+                </div>
+                <div class="form-group">
+                    <label for="task-desc">Description</label>
+                    <textarea id="task-desc" placeholder="Enter task description" rows="3"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="task-assignee">Assign to</label>
+                        <select id="task-assignee" required>
+                            <option value="">Select team member</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-priority">Priority</label>
+                        <select id="task-priority" required>
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="task-duedate">Due Date</label>
+                        <input type="date" id="task-duedate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-status">Status</label>
+                        <select id="task-status" required>
+                            <option value="pending">Pending</option>
+                            <option value="active">Active</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary modal-cancel">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Member Modal -->
+    <div id="member-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Team Member</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="member-form">
+                <div class="form-group">
+                    <label for="member-email">Email</label>
+                    <input type="email" id="member-email" placeholder="member@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="member-role">Role</label>
+                    <select id="member-role" required>
+                        <option value="member">Member</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary modal-cancel">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Member</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js" defer></script>
+</body>
+</html>

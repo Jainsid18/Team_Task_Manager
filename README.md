@@ -13,7 +13,7 @@ Located in `/workspace/`
 ✅ app.js        - Complete application logic with API integration (26KB)
 ```
 
-**Live Preview:** https://elven-bound-pelican.8000.dev.raccoonai.tech
+
 
 **Features:**
 - Login & Sign up pages
